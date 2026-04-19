@@ -7,6 +7,7 @@ import {
   HydrationBoundary,
 } from "@tanstack/react-query";
 import NoteDetailsClient from "./NoteDetails.client";
+import type { Metadata } from "next";
 
 interface PageProps {
   params: Promise<{ id: string }>;
@@ -14,9 +15,7 @@ interface PageProps {
 
 export async function generateMetadata({
   params,
-}: {
-  params: Promise<{ id: string }>;
-}) {
+}: PageProps): Promise<Metadata> {
   const { id } = await params;
   const note = await fetchNoteById(id);
 
@@ -26,8 +25,12 @@ export async function generateMetadata({
     openGraph: {
       title: note.title,
       description: note.content,
-      url: `https://your-site.vercel.app/notes/${id}`,
-      images: ["https://ac.goit.global/fullstack/react/notehub-og-meta.jpg"],
+      url: `https://08-zustand-ewrqwy0yg-darias-projects-971d340e.vercel.app/notes/${id}`,
+      images: [
+        {
+          url: "https://ac.goit.global/fullstack/react/notehub-og-meta.jpg",
+        },
+      ],
     },
   };
 }

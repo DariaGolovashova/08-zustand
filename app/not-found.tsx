@@ -3,13 +3,12 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Page not found",
-  description: "This page dose note exist",
+  description: "This page does note exist",
 
   openGraph: {
     title: "Page not found",
-    description: "This page dose note exist",
-    url: "https://your-site.vercel.app/404",
-    // замінити тут,
+    description: "This page does note exist",
+    url: "https://08-zustand-ewrqwy0yg-darias-projects-971d340e.vercel.app/404",
     images: ["https://ac.goit.global/fullstack/react/notehub-og-meta.jpg"],
   },
 };
