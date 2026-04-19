@@ -45,7 +45,7 @@ function NoteForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="css.form">
+    <form onSubmit={handleSubmit} className={css.form}>
       <input
         name="title"
         value={draft.title}
@@ -64,6 +64,8 @@ function NoteForm() {
         <option value="Todo">Todo</option>
         <option value="Work">Work</option>
         <option value="Personal">Personal</option>
+        <option value="Meeting">Meeting</option>
+        <option value="Shopping">Shopping</option>
       </select>
 
       <button type="submit">Create</button>
