@@ -5,15 +5,20 @@ import { useQuery } from "@tanstack/react-query";
 import { fetchNotes, FetchNotesResponse, FetchNotesParams } from "@/lib/api";
 import SearchBox from "@/components/SearchBox/SearchBox";
 import Pagination from "@/components/Pagination/Pagination";
-import Modal from "@/components/Modal/Modal";
-import NoteForm from "@/components/NoteForm/NoteForm";
+// import Modal from "@/components/Modal/Modal";
+// import NoteForm from "@/components/NoteForm/NoteForm";
 import NoteList from "@/components/NoteList/NoteList";
-import type { NoteFormValues } from "@/components/NoteForm/NoteForm";
+// import type { NoteFormValues } from "@/components/NoteForm/NoteForm";
+import Link from "next/link";
 
-function NotesClient({ tag }: { tag?: string }) {
+type PropsNotesClient = {
+  tag?: string;
+};
+
+function NotesClient({ tag }: PropsNotesClient) {
   const [search, setSearch] = useState<string>("");
   const [page, setPage] = useState<number>(1);
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  // const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   const [debouncedSearch, setDebouncedSearch] = useState<string>(search);
 
@@ -41,10 +46,10 @@ function NotesClient({ tag }: { tag?: string }) {
     placeholderData: (prev) => prev ?? { notes: [], totalPages: 1 },
   });
 
-  const handleCreateNote = (values: NoteFormValues) => {
-    console.log(values);
-    setIsModalOpen(false);
-  };
+  // const handleCreateNote = (values: NoteFormValues) => {
+  //   console.log(values);
+  //   setIsModalOpen(false);
+  // };
 
   if (isLoading) return <p>Loading, please wait...</p>;
   if (error) return <p>Could not fetch notes: {error.message}</p>;
@@ -52,11 +57,13 @@ function NotesClient({ tag }: { tag?: string }) {
   return (
     <div>
       <SearchBox value={search} onChange={handleSearchChange} />
+
       {data?.notes.length ? (
         <NoteList notes={data.notes} />
       ) : (
         <p> No notes found. </p>
       )}
+
       {data && data.totalPages > 1 && (
         <Pagination
           currentPage={page}
@@ -64,16 +71,17 @@ function NotesClient({ tag }: { tag?: string }) {
           onPageChange={setPage}
         />
       )}
-      {isModalOpen && (
+
+      {/* {isModalOpen && (
         <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
           <NoteForm
             onSubmit={handleCreateNote}
             onCancel={() => setIsModalOpen(false)}
           />
         </Modal>
-      )}
-
-      <button onClick={() => setIsModalOpen(true)}>Create Note</button>
+      )} */}
+      <Link href="/notes/action/create">Create note +</Link>
+      {/* <button onClick={() => setIsModalOpen(true)}>Create Note</button> */}
     </div>
   );
 }

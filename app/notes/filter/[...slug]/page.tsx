@@ -6,6 +6,7 @@ import {
 } from "@tanstack/react-query";
 import NotesClient from "./Notes.client";
 // import type { Note } from "@/types/note";
+import type { Metadata } from "next";
 
 interface PropsNotePage {
   params: Promise<{
@@ -13,7 +14,26 @@ interface PropsNotePage {
   }>;
 }
 
-async function NotePage({ params }: PropsNotePage) {
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string[] }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const tag = slug?.[0];
+
+  return {
+    title: `Notes: ${tag}`,
+    description: `Viewing notes filtered by ${tag}`,
+    openGraph: {
+      title: `Notes: ${tag}`,
+      description: `Viewing notes filtered by ${tag}`,
+      url: `https://your-site.vercel.app/notes/filter/${tag}`,
+      images: ["https://ac.goit.global/fullstack/react/notehub-og-meta.jpg"],
+    },
+  };
+}
+export async function NotePage({ params }: PropsNotePage) {
   const { slug } = await params;
   const tag = slug?.[0];
   const queryClient = new QueryClient();
